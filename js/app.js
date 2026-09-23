@@ -151,6 +151,15 @@
     bar.appendChild(track);
     return bar;
   }
+  var FB_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>';
+  function fbLink(cls, label, place) {
+    var a = el('a', { class: cls, href: window.NID_OWNER.facebook, target: '_blank', rel: 'noopener' });
+    a.innerHTML = FB_SVG;
+    if (label) a.appendChild(el('span', { text: label }));
+    else a.setAttribute('aria-label', 'Facebook');
+    a.addEventListener('click', function () { trackEv('facebook_click', { place: place }); });
+    return a;
+  }
   function ownerPhoto(size) {
     var img = el('img', { class: 'owner-photo', src: window.NID_OWNER.photo, alt: '',
       width: String(size), height: String(size) });
@@ -467,12 +476,16 @@
     root.appendChild(bar);
 
     var ot = window.NID_OWNER.text[ownerLang()];
-    var strip = el('a', { class: 'owner-strip no-print', href: waLink(), target: '_blank', rel: 'noopener' });
-    strip.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'top_strip' }); });
-    strip.appendChild(ownerPhoto(26));
-    strip.appendChild(el('span', { class: 'owner-strip-text', text: ot.strip + ' ' + window.NID_OWNER.name[ownerLang()] }));
-    var ic = waButton('owner-strip-icon', null);
-    strip.appendChild(el('span', { class: 'owner-strip-icon', html: ic.innerHTML }));
+    var strip = el('div', { class: 'owner-strip no-print' });
+    var who = el('a', { class: 'owner-strip-who', href: waLink(), target: '_blank', rel: 'noopener' });
+    who.appendChild(ownerPhoto(26));
+    who.appendChild(el('span', { class: 'owner-strip-text', text: ot.strip + ' ' + window.NID_OWNER.name[ownerLang()] }));
+    who.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'top_strip' }); });
+    strip.appendChild(who);
+    var waIcon = waButton('owner-strip-icon', null);
+    waIcon.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'top_strip' }); });
+    strip.appendChild(fbLink('owner-strip-icon', null, 'top_strip'));
+    strip.appendChild(waIcon);
     root.appendChild(strip);
     root.appendChild(promoTicker());
 
@@ -643,6 +656,7 @@
     var cardBtn = waButton('btn btn-wa btn-block', ot.button);
     cardBtn.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'review_card' }); });
     card.appendChild(cardBtn);
+    card.appendChild(fbLink('btn btn-fb btn-block', ot.fbButton, 'review_card'));
     main.appendChild(card);
 
     var again = el('button', { class: 'btn btn-quiet btn-block no-print', type: 'button', text: u.newForm });
