@@ -44,7 +44,7 @@ window.NID_FIELDS = [
   { name: 'a42addrBuildingNo', type: 'text', page: 2 },
   { name: 'a41addrOther', type: 'text', page: 2 },
   { name: 'a39addrCountry', type: 'select', dataKey: 'country', page: 2 },
-  { name: 'a38addrProv', type: 'select', dataKey: 'prov', page: 2, required: true },
+  { name: 'a38addrProv', type: 'select', dataKey: 'prov', page: 2 },
   { name: 'a22addrOffice', type: 'select', dataKey: 'addr', page: 2 },
   { name: 'a23addrFormNo', type: 'text', page: 2 },
   { name: 'a24addrFromDate', type: 'date', page: 2 },
