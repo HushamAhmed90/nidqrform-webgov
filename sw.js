@@ -1,13 +1,14 @@
 // Service worker: caches the app shell so the form opens and works with
 // no internet connection once it has been opened one time.
 // Bump CACHE whenever any cached file changes so phones pick up the update.
-var CACHE = 'nid-form-v5';
+var CACHE = 'nid-form-v6';
 var SHELL = [
   '/',
   '/index.html',
   '/manifest.json',
   '/css/style.css',
   '/css/img/irq.png',
+  '/css/img/owner.jpg',
   '/css/fonts/noto-sans-arabic-arabic-400-normal.woff2',
   '/css/fonts/noto-sans-arabic-arabic-700-normal.woff2',
   '/css/fonts/cairo-regular.woff2',

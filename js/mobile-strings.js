@@ -165,3 +165,26 @@ window.NID_PRINT = {
     labels: {}
   };
 })();
+
+// Owner shown inside the app (never on the printed form).
+window.NID_OWNER = {
+  name: { Ara: 'هشام احمد', Kur: 'هیشام ئەحمەد' },
+  whatsapp: '491743103309', // international format, digits only
+  photo: 'css/img/owner.jpg',
+  text: {
+    Ara: {
+      byline: 'برنامج مجاني من إعداد',
+      strip: 'من إعداد',
+      help: 'تحتاج مساعدة في معاملة عراقية؟',
+      button: 'راسلني على واتساب',
+      message: 'مرحباً، وصلت لك من برنامج استمارة البطاقة الوطنية'
+    },
+    Kur: {
+      byline: 'بەرنامەیەکی خۆڕایی، ئامادەکردنی',
+      strip: 'ئامادەکردنی',
+      help: 'یارمەتیت پێویستە لە مامەڵەیەکی عێراقی؟',
+      button: 'لە واتسئاپ نامەم بۆ بنێرە',
+      message: 'سڵاو، لە بەرنامەی فۆرمی کارتی نیشتیمانییەوە هاتووم'
+    }
+  }
+};

@@ -45,6 +45,7 @@
       if (attrs[k] === undefined || attrs[k] === null) continue;
       if (k === 'class') e.className = attrs[k];
       else if (k === 'text') e.textContent = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k];
       else e.setAttribute(k, attrs[k]);
     }
     (children || []).forEach(function (c) {
@@ -104,6 +105,27 @@
     state.data = Object.assign({}, window.NID_HIDDEN_DEFAULTS);
     state.step = 0;
     persist();
+  }
+
+  // ---------- Owner / WhatsApp contact ----------
+  function ownerLang() { return state.lang || 'Ara'; }
+  function waLink() {
+    var o = window.NID_OWNER;
+    return 'https://wa.me/' + o.whatsapp + '?text=' + encodeURIComponent(o.text[ownerLang()].message);
+  }
+  function ownerPhoto(size) {
+    var img = el('img', { class: 'owner-photo', src: window.NID_OWNER.photo, alt: '',
+      width: String(size), height: String(size) });
+    img.style.width = size + 'px';
+    img.style.height = size + 'px';
+    return img;
+  }
+  function waButton(cls, label) {
+    var a = el('a', { class: cls, href: waLink(), target: '_blank', rel: 'noopener' });
+    a.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.6 2.5 4 3.5 1.5.6 2.1.7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+    if (label) a.appendChild(el('span', { text: label }));
+    else a.setAttribute('aria-label', 'WhatsApp');
+    return a;
   }
 
   // ---------- Toast ----------
@@ -405,6 +427,14 @@
     bar.appendChild(actions);
     root.appendChild(bar);
 
+    var ot = window.NID_OWNER.text[ownerLang()];
+    var strip = el('a', { class: 'owner-strip no-print', href: waLink(), target: '_blank', rel: 'noopener' });
+    strip.appendChild(ownerPhoto(26));
+    strip.appendChild(el('span', { class: 'owner-strip-text', text: ot.strip + ' ' + window.NID_OWNER.name[ownerLang()] }));
+    var ic = waButton('owner-strip-icon', null);
+    strip.appendChild(el('span', { class: 'owner-strip-icon', html: ic.innerHTML }));
+    root.appendChild(strip);
+
     var total = LAST_STEP + 1;
     var prog = el('div', { class: 'progress no-print' });
     prog.appendChild(el('p', { class: 'progress-label', text: u.stepOf(state.step + 1, total) }));
@@ -559,6 +589,18 @@
     stage.appendChild(scaler);
     main.appendChild(stage);
     main.appendChild(el('p', { class: 'field-hint center no-print', text: u.zoomHint }));
+
+    var ot = window.NID_OWNER.text[ownerLang()];
+    var card = el('div', { class: 'owner-card no-print' });
+    var head = el('div', { class: 'owner-card-head' });
+    head.appendChild(ownerPhoto(52));
+    head.appendChild(el('div', {}, [
+      el('p', { class: 'owner-card-name', text: window.NID_OWNER.name[ownerLang()] }),
+      el('p', { class: 'owner-card-help', text: ot.help }),
+    ]));
+    card.appendChild(head);
+    card.appendChild(waButton('btn btn-wa btn-block', ot.button));
+    main.appendChild(card);
 
     var again = el('button', { class: 'btn btn-quiet btn-block no-print', type: 'button', text: u.newForm });
     again.onclick = function () {
@@ -755,6 +797,14 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    var ob = $('owner-byline');
+    if (ob) {
+      var o = window.NID_OWNER;
+      ob.innerHTML = '';
+      ob.appendChild(ownerPhoto(76));
+      ob.appendChild(el('p', { class: 'owner-byline-sub', text: o.text.Ara.byline }));
+      ob.appendChild(el('p', { class: 'owner-byline-name', text: o.name.Ara }));
+    }
     $('lang-ara-btn').onclick = function () { selectLang('Ara'); };
     $('lang-kur-btn').onclick = function () { selectLang('Kur'); };
     history.replaceState({ step: 0 }, '');

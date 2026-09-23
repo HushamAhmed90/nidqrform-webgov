@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>استمارة البطاقة الوطنية</title>
-  <meta name="description" content="تعبئة استمارة البطاقة الوطنية العراقية من الموبايل مع رمز QR، وحفظها كصورة أو PDF أو طباعتها.">
+  <meta name="description" content="تعبئة استمارة البطاقة الوطنية العراقية من الموبايل مع رمز QR، وحفظها كصورة أو PDF أو طباعتها. برنامج مجاني من إعداد هشام احمد.">
   <meta name="theme-color" content="#0A4E3A">
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
@@ -15,9 +15,6 @@
   <meta name="apple-mobile-web-app-title" content="البطاقة الوطنية">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8986405238310529" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-8986405238310529">
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -28,7 +25,7 @@
 
   <div id="lang-dialog" class="dialog-overlay" style="display:none">
     <div class="dialog-box">
-      <img src="/icons/icon-192.png" alt="" width="64" height="64" style="border-radius:14px;margin-bottom:10px">
+      <div id="owner-byline" class="owner-byline"></div>
       <p class="dialog-msg" id="lang-dialog-msg">أختر لغــة عرض التطبيق / زمانی نمایشی ئەپەکە هەڵبژێرە</p>
       <div class="dialog-actions">
         <button id="lang-ara-btn" class="btn btn-primary">عــربــي</button>
@@ -73,32 +70,6 @@
           <li>يمكن تثبيت الموقع كتطبيق على الموبايل من زر "تثبيت التطبيق"، ويعمل بعدها بدون إنترنت.</li>
       </ul>
   </div>
-
-  <!-- Werbung (Wird beim Drucken durch .no-print ausgeblendet) -->
-  <div class="no-print" style="max-width: 950px; margin: 20px auto; padding: 0 20px;">
-      <div style="margin-bottom: 20px;">
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-8986405238310529"
-               data-ad-slot="9087730488"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-      </div>
-      <div>
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-format="autorelaxed"
-               data-ad-client="ca-pub-8986405238310529"
-               data-ad-slot="5783297335"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-      </div>
-  </div>
-
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/html2canvas.min.js"></script>

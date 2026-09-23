@@ -164,6 +164,33 @@ input[dir="ltr"].field-input { text-align: right; }
 .field-error:empty { display: none; }
 .has-error .field-input { border-color: var(--red); background: #FFF6F5; }
 
+/* ---- Owner (name, photo, WhatsApp) ---- */
+.owner-photo { border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--green-tint); display: block; }
+.owner-byline { display: flex; flex-direction: column; align-items: center; margin-bottom: 14px; }
+.owner-byline .owner-photo { border: 3px solid var(--green-tint); margin-bottom: 8px; }
+.owner-byline-sub { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.owner-byline-name { margin: 2px 0 0; font-size: 19px; font-weight: 700; }
+
+.owner-strip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--green); color: #fff; text-decoration: none;
+  padding: 7px 16px; font-size: 13px; font-weight: 700;
+}
+.owner-strip .owner-photo { border: 1.5px solid rgba(255,255,255,.7); }
+.owner-strip-text { flex: 1; }
+.owner-strip-icon { display: inline-flex; }
+.owner-strip-icon svg { width: 22px; height: 22px; }
+
+.owner-card {
+  background: var(--surface); border: 2px solid var(--green); border-radius: 16px;
+  padding: 14px; margin: 14px 0 6px;
+}
+.owner-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.owner-card-name { margin: 0; font-size: 17px; font-weight: 700; }
+.owner-card-help { margin: 2px 0 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
+.btn-wa { background: #1FA855; border-color: #1FA855; color: #fff; text-decoration: none; gap: 8px; }
+.btn-wa:active { background: #178A45; }
+
 /* ---- Bottom action bar ---- */
 .action-bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
