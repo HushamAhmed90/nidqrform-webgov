@@ -107,6 +107,14 @@
     persist();
   }
 
+  // ---------- Usage counters (Vercel Web Analytics custom events) ----------
+  // Only counts actions; never sends anything the person typed.
+  function trackEv(name, data) {
+    try {
+      if (window.va) window.va('event', { name: name, data: Object.assign({ lang: state.lang || '' }, data || {}) });
+    } catch (e) { /* analytics must never break the app */ }
+  }
+
   // ---------- Owner / WhatsApp contact ----------
   function ownerLang() { return state.lang || 'Ara'; }
   function waLink(msg) {
@@ -128,6 +136,7 @@
       track.appendChild(item);
     }
     a.appendChild(track);
+    a.addEventListener('click', function () { trackEv('booking_click', { place: 'promo_strip' }); });
     return a;
   }
   function ownerPhoto(size) {
@@ -411,6 +420,7 @@
         }
       }
     }
+    if (state.step === LAST_STEP - 1) trackEv('form_completed');
     goTo(state.step + 1, true);
   }
 
@@ -446,6 +456,7 @@
 
     var ot = window.NID_OWNER.text[ownerLang()];
     var strip = el('a', { class: 'owner-strip no-print', href: waLink(), target: '_blank', rel: 'noopener' });
+    strip.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'top_strip' }); });
     strip.appendChild(ownerPhoto(26));
     strip.appendChild(el('span', { class: 'owner-strip-text', text: ot.strip + ' ' + window.NID_OWNER.name[ownerLang()] }));
     var ic = waButton('owner-strip-icon', null);
@@ -617,7 +628,9 @@
       el('p', { class: 'owner-card-help', text: ot.help }),
     ]));
     card.appendChild(head);
-    card.appendChild(waButton('btn btn-wa btn-block', ot.button));
+    var cardBtn = waButton('btn btn-wa btn-block', ot.button);
+    cardBtn.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'review_card' }); });
+    card.appendChild(cardBtn);
     main.appendChild(card);
 
     var again = el('button', { class: 'btn btn-quiet btn-block no-print', type: 'button', text: u.newForm });
@@ -639,7 +652,7 @@
     var pdf = el('button', { class: 'btn btn-primary', type: 'button', text: u.savePdf, id: 'btn-pdf' });
     pdf.onclick = function () { exportFile('pdf', pdf); };
     var pr = el('button', { class: 'btn btn-quiet', type: 'button', text: u.print });
-    pr.onclick = function () { window.print(); };
+    pr.onclick = function () { trackEv('print'); window.print(); };
     nav.appendChild(edit); nav.appendChild(img); nav.appendChild(pdf); nav.appendChild(pr);
     root.appendChild(nav);
 
@@ -776,7 +789,10 @@
           return deliver(pdf, fileBaseName() + '.pdf');
         });
     }).then(function (done) {
-      if (done) toast(u.saved);
+      if (done) {
+        toast(u.saved);
+        trackEv(kind === 'png' ? 'saved_image' : 'saved_pdf');
+      }
     }).catch(function (err) {
       console.error(err);
       toast(u.saveFailed);
@@ -843,7 +859,7 @@
     deferredInstall = e;
     updateInstall();
   });
-  window.addEventListener('appinstalled', function () { deferredInstall = null; updateInstall(); });
+  window.addEventListener('appinstalled', function () { deferredInstall = null; updateInstall(); trackEv('app_installed'); });
   function updateInstall() {
     var b = $('install-btn');
     if (b) b.hidden = !canOfferInstall();
