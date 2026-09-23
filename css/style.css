@@ -193,6 +193,11 @@ input[dir="ltr"].field-input { text-align: right; }
 .btn-wa:active { background: #178A45; }
 .btn-fb { background: transparent; border-color: #1877F2; color: #1877F2; text-decoration: none; gap: 8px; }
 .btn-fb:active { background: #E7F0FE; }
+.btn-tt { background: transparent; border-color: #111; color: #111; text-decoration: none; gap: 8px; }
+.btn-tt:active { background: #EEE; }
+.owner-social { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.owner-social .btn { font-size: 14px; padding: 0 8px; min-height: 46px; white-space: nowrap; }
+.owner-strip-icon { width: 32px; }
 
 /* ---- Promo strip (booking + lawyer announcements) ---- */
 .promo {

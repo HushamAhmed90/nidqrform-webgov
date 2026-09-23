@@ -171,6 +171,7 @@ window.NID_OWNER = {
   name: { Ara: 'هشام احمد', Kur: 'هیشام ئەحمەد' },
   whatsapp: '491743103309', // international format, digits only
   facebook: 'https://www.facebook.com/share/g/1RAQ3wkJm8/',
+  tiktok: 'https://vm.tiktok.com/ZGdQbPGJ5/',
   photo: 'css/img/owner.jpg',
   text: {
     Ara: {
@@ -186,7 +187,8 @@ window.NID_OWNER = {
       lawyerText: 'لكل مغترب داخل وخارج العراق: متابعة قضاياك ومعاملاتك عن طريق محامٍ',
       lawyerCta: 'راسلني على واتساب',
       lawyerMessage: 'مرحباً، أحتاج محامي لمتابعة قضية أو معاملة في العراق',
-      fbButton: 'انضم لمجموعتنا على فيسبوك'
+      fbButton: 'مجموعة فيسبوك',
+      ttButton: 'حساب تيك توك'
     },
     Kur: {
       byline: 'بەرنامەیەکی خۆڕایی، ئامادەکردنی',
@@ -201,7 +203,8 @@ window.NID_OWNER = {
       lawyerText: 'بۆ هەموو دوورەوڵاتییەک لە ناوەوە و دەرەوەی عێراق: بەدواداچوونی کێشە و مامەڵەکانت لە ڕێگەی پارێزەرەوە',
       lawyerCta: 'لە واتسئاپ نامەم بۆ بنێرە',
       lawyerMessage: 'سڵاو، پێویستم بە پارێزەرە بۆ بەدواداچوونی کێشە یان مامەڵەیەک لە عێراق',
-      fbButton: 'ببە بە ئەندامی گرووپەکەمان لە فەیسبووک'
+      fbButton: 'گرووپی فەیسبووک',
+      ttButton: 'هەژماری تیکتۆک'
     }
   }
 };

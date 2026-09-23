@@ -160,6 +160,15 @@
     a.addEventListener('click', function () { trackEv('facebook_click', { place: place }); });
     return a;
   }
+  var TT_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.6 2h-3.3v13.3a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.1a6.3 6.3 0 1 0 5.3 6.2V8.6a7.7 7.7 0 0 0 4.4 1.4V6.7a4.4 4.4 0 0 1-4.4-4.4z"/></svg>';
+  function ttLink(cls, label, place) {
+    var a = el('a', { class: cls, href: window.NID_OWNER.tiktok, target: '_blank', rel: 'noopener' });
+    a.innerHTML = TT_SVG;
+    if (label) a.appendChild(el('span', { text: label }));
+    else a.setAttribute('aria-label', 'TikTok');
+    a.addEventListener('click', function () { trackEv('tiktok_click', { place: place }); });
+    return a;
+  }
   function ownerPhoto(size) {
     var img = el('img', { class: 'owner-photo', src: window.NID_OWNER.photo, alt: '',
       width: String(size), height: String(size) });
@@ -484,6 +493,7 @@
     strip.appendChild(who);
     var waIcon = waButton('owner-strip-icon', null);
     waIcon.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'top_strip' }); });
+    strip.appendChild(ttLink('owner-strip-icon', null, 'top_strip'));
     strip.appendChild(fbLink('owner-strip-icon', null, 'top_strip'));
     strip.appendChild(waIcon);
     root.appendChild(strip);
@@ -656,7 +666,10 @@
     var cardBtn = waButton('btn btn-wa btn-block', ot.button);
     cardBtn.addEventListener('click', function () { trackEv('whatsapp_click', { place: 'review_card' }); });
     card.appendChild(cardBtn);
-    card.appendChild(fbLink('btn btn-fb btn-block', ot.fbButton, 'review_card'));
+    card.appendChild(el('div', { class: 'owner-social' }, [
+      fbLink('btn btn-fb', ot.fbButton, 'review_card'),
+      ttLink('btn btn-tt', ot.ttButton, 'review_card'),
+    ]));
     main.appendChild(card);
 
     var again = el('button', { class: 'btn btn-quiet btn-block no-print', type: 'button', text: u.newForm });
