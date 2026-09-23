@@ -109,9 +109,26 @@
 
   // ---------- Owner / WhatsApp contact ----------
   function ownerLang() { return state.lang || 'Ara'; }
-  function waLink() {
+  function waLink(msg) {
     var o = window.NID_OWNER;
-    return 'https://wa.me/' + o.whatsapp + '?text=' + encodeURIComponent(o.text[ownerLang()].message);
+    return 'https://wa.me/' + o.whatsapp + '?text=' + encodeURIComponent(msg || o.text[ownerLang()].message);
+  }
+  // Scrolling promo strip: "appointment booking available", taps open WhatsApp.
+  function promoTicker() {
+    var t = window.NID_OWNER.text[ownerLang()];
+    var a = el('a', { class: 'promo no-print', href: waLink(t.promoMessage), target: '_blank', rel: 'noopener',
+      'aria-label': t.promo + ' - ' + t.promoCta });
+    var track = el('div', { class: 'promo-track', 'aria-hidden': 'true' });
+    for (var i = 0; i < 4; i++) {
+      var item = el('span', { class: 'promo-item', dir: 'rtl' });
+      item.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/></svg>';
+      item.appendChild(el('b', { text: t.promo }));
+      item.appendChild(el('span', { class: 'promo-sep', text: '•' }));
+      item.appendChild(el('span', { text: t.promoCta }));
+      track.appendChild(item);
+    }
+    a.appendChild(track);
+    return a;
   }
   function ownerPhoto(size) {
     var img = el('img', { class: 'owner-photo', src: window.NID_OWNER.photo, alt: '',
@@ -434,6 +451,7 @@
     var ic = waButton('owner-strip-icon', null);
     strip.appendChild(el('span', { class: 'owner-strip-icon', html: ic.innerHTML }));
     root.appendChild(strip);
+    root.appendChild(promoTicker());
 
     var total = LAST_STEP + 1;
     var prog = el('div', { class: 'progress no-print' });

@@ -191,6 +191,25 @@ input[dir="ltr"].field-input { text-align: right; }
 .btn-wa { background: #1FA855; border-color: #1FA855; color: #fff; text-decoration: none; gap: 8px; }
 .btn-wa:active { background: #178A45; }
 
+/* ---- Promo strip (appointment booking) ---- */
+.promo {
+  display: block; overflow: hidden; white-space: nowrap; text-decoration: none;
+  background: #FFF1C9; color: #5C3E00; border-bottom: 1px solid #F0D58A;
+  font-size: 14px; line-height: 36px; height: 36px; direction: ltr;
+}
+.promo-track { display: inline-flex; animation: promo-roll 30s linear infinite; }
+.promo-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 28px; }
+.promo-item svg { flex-shrink: 0; }
+.promo-item b { font-weight: 700; }
+.promo-sep { opacity: .5; }
+.promo:active { background: #FBE6A6; }
+@keyframes promo-roll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .promo { direction: rtl; text-align: center; }
+  .promo-track { animation: none; }
+  .promo-item ~ .promo-item { display: none; }
+}
+
 /* ---- Bottom action bar ---- */
 .action-bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
