@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>استمارة البطاقة الوطنية</title>
+  <meta name="description" content="تعبئة استمارة البطاقة الوطنية العراقية من الموبايل مع رمز QR، وحفظها كصورة أو PDF أو طباعتها.">
+  <meta name="theme-color" content="#0A4E3A">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="البطاقة الوطنية">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8986405238310529" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-8986405238310529">
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+</head>
+<body>
+
+  <div id="lang-dialog" class="dialog-overlay" style="display:none">
+    <div class="dialog-box">
+      <img src="/icons/icon-192.png" alt="" width="64" height="64" style="border-radius:14px;margin-bottom:10px">
+      <p class="dialog-msg" id="lang-dialog-msg">أختر لغــة عرض التطبيق / زمانی نمایشی ئەپەکە هەڵبژێرە</p>
+      <div class="dialog-actions">
+        <button id="lang-ara-btn" class="btn btn-primary">عــربــي</button>
+        <button id="lang-kur-btn" class="btn btn-primary">كـــوردي</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="app-root"></div>
+
+  <!-- Content Section added for Google AdSense Approval (Hidden on print) -->
+  <div class="no-print" style="max-width: 950px; margin: 20px auto; padding: 20px; background: #fff; text-align: right; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-size: 14px; color: #333;">
+      <div style="background: #fff8e1; border: 1px solid #ffc107; border-radius: 8px; padding: 15px 18px; margin-bottom: 15px;">
+        <h3 style="color: #b45309; margin: 0 0 10px 0;">إخلاء مسؤولية</h3>
+        <p style="line-height: 1.8; margin: 0;">
+            هذا الموقع أداة مساعدة <strong>مستقلة وغير رسمية</strong>، تم برمجتها لتسهيل تعبئة وطباعة الاستمارة على المواطنين، وهي <strong>غير مرتبطة أو تابعة بأي شكل من الأشكال لوزارة الداخلية العراقية أو مديرية البطاقة الوطنية أو أي جهة حكومية رسمية</strong>. الشعارات والتصميم المستخدمان هنا لغرض محاكاة شكل الاستمارة الرسمية فقط تسهيلاً على المستخدم، ولا يمثلان أي اعتماد أو تعاون رسمي مع الجهات المذكورة.
+            يقع على عاتق المستخدم وحده التأكد من صحة ومطابقة البيانات المدخلة قبل التقديم، ولا تضمن هذه الأداة قبول الاستمارة من الجهات الرسمية. لا يتم إرسال أو مشاركة أي بيانات شخصية تُكتب هنا؛ تتم معالجة جميع البيانات محلياً على جهاز المستخدم فقط، وتُحفظ مسودة الاستمارة على الجهاز نفسه لتكملتها لاحقاً، ويمكن مسحها بزر "استمارة جديدة".
+        </p>
+      </div>
+
+      <h3 style="color: #1565c0; margin-bottom: 10px;">معلومات عن الاستمارة الإلكترونية</h3>
+      <p style="line-height: 1.8; margin-bottom: 10px;">
+          هذه الأداة المجانية تساعدك على تعبئة استمارة البطاقة الوطنية الموحدة بشكل إلكتروني سريع وسهل، وتجهيزها للطباعة مع رمز الاستجابة السريعة (QR Code) المطلوب من قبل مديرية الأحوال المدنية والجوازات والإقامة في جمهورية العراق.
+      </p>
+      <p style="line-height: 1.8;">
+          <strong>طريقة الاستخدام:</strong> قم بإدخال بياناتك الشخصية وبيانات الوالدين في الحقول المخصصة أعلاه. تأكد من أن جميع المعلومات صحيحة ومطابقة للمستندات الرسمية. بعد الانتهاء من ملء جميع الحقول المطلوبة، اضغط على زر "حفظ / طباعة" للحصول على النسخة الجاهزة للتقديم.
+      </p>
+
+      <h3 style="color: #1565c0; margin-top: 20px; margin-bottom: 10px;">التعليمات</h3>
+      <ul style="line-height: 1.8; margin-bottom: 10px; padding-right: 20px; list-style-type: disc;">
+          <li>ملء كافة الحقول المطلوبة في الواجهة .</li>
+          <li>التواريخ يتم اختيارها من التقويم وبالإمكان تحديد سنة الميلاد بالضغط عليها .</li>
+          <li>تثبيت ( 7/1 ) افتراضياً في حقل التولد لمن لا يوجد له يوم وشهر .</li>
+          <li>تثبيت ( 1 ) افتراضياً في حقل التولد لمن لا يوجد لديه يوم .</li>
+          <li>ضرورة تثبيت رقم جواز السفر ان وجد .</li>
+          <li>تثبيت رقم السجل والصحيفة للاطفال حديثي الولادة كما مثبت في هوية الأحوال المدنية الخاصة بالاب .</li>
+          <li>لمن لا يملك شهادة الجنسية العراقية تترك الحقول الخاصة بشهادة الجنسية فارغة ماعدا المادة القانونية تثبت استنادا لما مثبت في شهادة الجنسية الإسناد .</li>
+          <li>ضرورة تثبيت رقم الهاتف الصحيح ليكون مفتاح تواصل معك عند حدوث طارئ في قيدك الشخصي .</li>
+          <li>بعد المراجعة تحفظ الاستمارة كصورة أو ملف PDF على الموبايل، ويمكن إرسالها لأي مكتب طباعة.</li>
+          <li>تطبع الاستمارة مباشرة بالضغط على زر الطباعة.</li>
+          <li>يمكن تثبيت الموقع كتطبيق على الموبايل من زر "تثبيت التطبيق"، ويعمل بعدها بدون إنترنت.</li>
+      </ul>
+  </div>
+
+  <!-- Werbung (Wird beim Drucken durch .no-print ausgeblendet) -->
+  <div class="no-print" style="max-width: 950px; margin: 20px auto; padding: 0 20px;">
+      <div style="margin-bottom: 20px;">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8986405238310529"
+               data-ad-slot="9087730488"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+      </div>
+      <div>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="autorelaxed"
+               data-ad-client="ca-pub-8986405238310529"
+               data-ad-slot="5783297335"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+      </div>
+  </div>
+
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/html2canvas.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/fields.js"></script>
+  <script src="js/mobile-strings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
