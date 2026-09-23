@@ -121,23 +121,35 @@
     var o = window.NID_OWNER;
     return 'https://wa.me/' + o.whatsapp + '?text=' + encodeURIComponent(msg || o.text[ownerLang()].message);
   }
-  // Scrolling promo strip: "appointment booking available", taps open WhatsApp.
+  // Scrolling promo strip. Each announcement is its own link, so a tap
+  // opens WhatsApp with the matching message and is counted separately.
+  var PROMO_ICONS = {
+    calendar: '<path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>',
+    scale: '<path d="M7 20h10M6 6l6-1 6 1M12 3v17M9 12L6 6l-3 6a3 3 0 0 0 6 0zM21 12l-3-6-3 6a3 3 0 0 0 6 0z"/>'
+  };
   function promoTicker() {
     var t = window.NID_OWNER.text[ownerLang()];
-    var a = el('a', { class: 'promo no-print', href: waLink(t.promoMessage), target: '_blank', rel: 'noopener',
-      'aria-label': t.promo + ' - ' + t.promoCta });
-    var track = el('div', { class: 'promo-track', 'aria-hidden': 'true' });
-    for (var i = 0; i < 4; i++) {
-      var item = el('span', { class: 'promo-item', dir: 'rtl' });
-      item.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/></svg>';
-      item.appendChild(el('b', { text: t.promo }));
-      item.appendChild(el('span', { class: 'promo-sep', text: '•' }));
-      item.appendChild(el('span', { text: t.promoCta }));
-      track.appendChild(item);
+    var promos = [
+      { icon: 'calendar', title: t.promo, cta: t.promoCta, msg: t.promoMessage, ev: 'booking_click' },
+      { icon: 'scale', title: t.lawyerTitle, text: t.lawyerText, cta: t.lawyerCta, msg: t.lawyerMessage, ev: 'lawyer_click' }
+    ];
+    var bar = el('div', { class: 'promo no-print' });
+    var track = el('div', { class: 'promo-track' });
+    for (var round = 0; round < 2; round++) {
+      promos.forEach(function (p) {
+        var a = el('a', { class: 'promo-item promo-' + p.icon, dir: 'rtl', href: waLink(p.msg), target: '_blank', rel: 'noopener' });
+        if (round > 0) { a.setAttribute('aria-hidden', 'true'); a.setAttribute('tabindex', '-1'); }
+        a.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + PROMO_ICONS[p.icon] + '</g></svg>';
+        a.appendChild(el('b', { text: p.title }));
+        if (p.text) { a.appendChild(el('span', { class: 'promo-sep', text: '•' })); a.appendChild(el('span', { text: p.text })); }
+        a.appendChild(el('span', { class: 'promo-sep', text: '•' }));
+        a.appendChild(el('span', { class: 'promo-cta', text: p.cta }));
+        a.addEventListener('click', function () { trackEv(p.ev, { place: 'promo_strip' }); });
+        track.appendChild(a);
+      });
     }
-    a.appendChild(track);
-    a.addEventListener('click', function () { trackEv('booking_click', { place: 'promo_strip' }); });
-    return a;
+    bar.appendChild(track);
+    return bar;
   }
   function ownerPhoto(size) {
     var img = el('img', { class: 'owner-photo', src: window.NID_OWNER.photo, alt: '',
