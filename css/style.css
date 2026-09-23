@@ -1,0 +1,313 @@
+/* The reference document (from the original desktop app) renders in
+   Tahoma, not Cairo, so Tahoma is tried first where the OS has it
+   (mainly Windows). NotoSansArabicLocal is bundled and used as the
+   fallback everywhere else, since it shapes Arabic correctly in every
+   browser/OS (unlike generic sans-serif, which caused broken letter
+   joining before) and is visually close to Tahoma's plain, standard look. */
+@font-face {
+  font-family: 'NotoSansArabicLocal';
+  src: url('fonts/noto-sans-arabic-arabic-400-normal.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NotoSansArabicLocal';
+  src: url('fonts/noto-sans-arabic-arabic-700-normal.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo 2.010 (the static release the official printout uses), subset
+   to Arabic + Latin. */
+@font-face { font-family: 'CairoForm'; font-weight: 400; font-display: block;
+  src: url('fonts/cairo-regular.woff2') format('woff2'); }
+@font-face { font-family: 'CairoForm'; font-weight: 600; font-display: block;
+  src: url('fonts/cairo-semibold.woff2') format('woff2'); }
+
+/* ==================== Mobile app UI ====================
+   Palette: a quiet grey-green ground, white fields, one deep green for
+   actions and progress, red only for missing required fields. */
+:root {
+  --bg: #EDF1EF;
+  --surface: #FFFFFF;
+  --ink: #16211D;
+  --muted: #5B6B65;
+  --line: #CCD6D1;
+  --green: #0F6B4F;
+  --green-deep: #0A4E3A;
+  --green-tint: #E1EEE8;
+  --red: #B3261E;
+  --ui-font: Tahoma, 'NotoSansArabicLocal', 'Segoe UI', Arial, sans-serif;
+  --bar-h: 76px;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ui-font);
+}
+body { -webkit-tap-highlight-color: transparent; padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px)); }
+body.sheet-open { overflow: hidden; }
+button, input { font-family: var(--ui-font); color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid #5FB394; outline-offset: 2px; }
+
+.app-bar, .progress, .step, .review, .action-bar, .sheet, .dialog-box, .toast {
+  font-family: var(--ui-font);
+}
+
+/* ---- Language dialog (first launch) ---- */
+.dialog-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10, 30, 22, 0.55);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.dialog-box {
+  background: var(--surface); width: 100%; max-width: 520px;
+  border-radius: 20px 20px 0 0; text-align: center;
+  padding: 28px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+.dialog-msg { font-size: 17px; line-height: 1.8; margin: 0 0 20px; }
+.dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (min-width: 600px) {
+  .dialog-overlay { align-items: center; }
+  .dialog-box { border-radius: 16px; }
+}
+
+/* ---- Buttons ---- */
+.btn {
+  min-height: 50px; padding: 0 18px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--surface);
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  touch-action: manipulation;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.6; }
+.btn-primary { background: var(--green); border-color: var(--green); color: #fff; }
+.btn-primary:active { background: var(--green-deep); }
+.btn-quiet { background: transparent; }
+.btn-block { width: 100%; margin-top: 10px; }
+.btn-grow { flex: 1; }
+
+.chip {
+  min-height: 36px; padding: 0 14px; border-radius: 18px;
+  border: 1.5px solid rgba(255,255,255,0.5); background: transparent; color: #fff;
+  font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+.chip-solid { background: #fff; color: var(--green-deep); border-color: #fff; }
+.icon-btn {
+  width: 44px; height: 44px; flex-shrink: 0; border: 0; border-radius: 22px;
+  background: var(--bg); font-size: 18px; cursor: pointer;
+}
+
+/* ---- App bar + progress ---- */
+.app-bar {
+  background: var(--green-deep); color: #fff;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 16px;
+}
+.app-title { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.5; }
+.app-bar-actions { display: flex; gap: 8px; }
+
+.progress {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--green-deep); color: #CFE3DA;
+  padding: 0 16px 14px;
+}
+.progress-label { margin: 0 0 8px; font-size: 13px; }
+.progress-track { display: flex; gap: 4px; }
+.progress-seg { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.22); }
+.progress-seg.done { background: #8CCBB0; }
+.progress-seg.now { background: #fff; }
+
+/* ---- Step content ---- */
+.step, .review {
+  max-width: 560px; margin: 0 auto;
+  padding: 22px 16px calc(var(--bar-h) + 40px + env(safe-area-inset-bottom, 0px));
+}
+.review { max-width: 900px; padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
+.step-title { margin: 0 0 4px; font-size: 24px; line-height: 1.5; font-weight: 700; }
+.step-note { margin: 0 0 20px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+.field { margin-bottom: 18px; }
+.field-label { display: block; font-size: 15px; font-weight: 700; margin-bottom: 7px; }
+.req { color: var(--red); }
+.field-input {
+  width: 100%; min-height: 50px; padding: 8px 14px;
+  font-size: 17px; /* 16px+ stops iOS from zooming into the field */
+  border: 1.5px solid var(--line); border-radius: 12px; background: var(--surface);
+  appearance: none; -webkit-appearance: none;
+}
+.field-input:focus { border-color: var(--green); outline: none; box-shadow: 0 0 0 3px var(--green-tint); }
+input[type="date"].field-input { text-align: right; }
+input[dir="ltr"].field-input { text-align: right; }
+.field-select {
+  text-align: right; cursor: pointer; line-height: 1.5;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.field-select::after {
+  content: ''; flex-shrink: 0; width: 9px; height: 9px;
+  border-left: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: rotate(-45deg) translateY(-2px);
+}
+.field-select.empty { color: var(--muted); font-weight: 400; }
+.field-hint { margin: 6px 0 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+.field-hint.center { text-align: center; }
+.field-error { margin: 4px 0 0; font-size: 13px; color: var(--red); font-weight: 700; min-height: 0; }
+.field-error:empty { display: none; }
+.has-error .field-input { border-color: var(--red); background: #FFF6F5; }
+
+/* ---- Bottom action bar ---- */
+.action-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex; gap: 10px;
+}
+.action-bar > .btn-quiet { min-width: 96px; }
+.action-bar-review { display: grid; grid-template-columns: 1fr 1fr; }
+.action-bar-review .btn-primary { order: -1; }
+@media (min-width: 600px) {
+  .action-bar { justify-content: center; }
+  .action-bar > * { max-width: 260px; }
+  .action-bar-review { grid-template-columns: repeat(4, minmax(0, 200px)); justify-content: center; }
+}
+
+/* ---- Bottom sheets (picker, notices) ---- */
+.sheet-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(10, 30, 22, 0.5);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.sheet {
+  width: 100%; max-width: 560px; max-height: 88vh;
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  display: flex; flex-direction: column;
+  padding: 8px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(24px); opacity: 0;
+  transition: transform .22s ease-out, opacity .22s ease-out;
+}
+.sheet-overlay.open .sheet { transform: none; opacity: 1; }
+.sheet-tall { height: 88vh; }
+.sheet-grip { width: 40px; height: 5px; border-radius: 3px; background: var(--line); margin: 4px auto 10px; flex-shrink: 0; }
+.sheet-body { padding: 4px 4px 0; }
+.sheet-title { margin: 0; font-size: 19px; line-height: 1.5; }
+.sheet-text { margin: 8px 0 12px; font-size: 15px; line-height: 1.8; color: var(--muted); }
+
+.picker { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.picker-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.picker-search {
+  width: 100%; min-height: 50px; padding: 10px 14px; font-size: 17px;
+  border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg);
+  margin-bottom: 8px;
+}
+.picker-search:focus { outline: none; border-color: var(--green); background: #fff; }
+.picker-list { overflow-y: auto; flex: 1; min-height: 0; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.picker-item {
+  display: block; width: 100%; text-align: right; background: none; border: 0;
+  border-bottom: 1px solid #E6ECE9; padding: 14px 6px; font-size: 16px; line-height: 1.6; cursor: pointer;
+}
+.picker-item:active { background: var(--green-tint); }
+.picker-item.picked { color: var(--green); font-weight: 700; }
+.picker-item.picked::before { content: '✓ '; }
+.picker-empty { padding: 18px 6px; text-align: center; color: var(--muted); font-size: 14px; }
+
+/* ---- Review: A4 preview shrunk to the phone's width ---- */
+.pf-stage {
+  position: relative; overflow: hidden; cursor: zoom-in;
+  background: #fff; border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(22,33,29,.12), 0 8px 24px rgba(22,33,29,.10);
+  margin: 4px 0 10px;
+}
+.pf-stage.zoomed { overflow-x: auto; cursor: zoom-out; }
+.pf-scaler { width: 794px; transform-origin: top right; }
+[dir="rtl"] .pf-scaler { margin-right: 0; }
+.capture-host { position: fixed; top: 0; left: -10000px; width: 794px; background: #fff; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--bar-h) + 70px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 12px); opacity: 0; pointer-events: none; z-index: 80;
+  background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 12px;
+  font-size: 15px; max-width: calc(100% - 32px); text-align: center; line-height: 1.6;
+  transition: opacity .2s, transform .2s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet, .toast { transition: none; }
+}
+
+/* ==================== Printed form ====================
+   One A4 page (794 x 1123 CSS px). Every size and offset below was
+   measured from the official app's printout so the result matches it:
+   light grey #ddd grid, no shaded labels, 86px label column, Cairo type,
+   text sitting on the bottom of each cell. */
+.pf-page {
+  position: relative; width: 794px; height: 1123px; overflow: hidden;
+  padding: 192.6px 40.3px 0 41.6px; box-sizing: border-box;
+  background: #fff; color: #000; direction: rtl; text-align: right;
+  font-family: 'CairoForm', Tahoma, 'NotoSansArabicLocal', sans-serif;
+  font-weight: 400;
+}
+.pf-hdr-lines {
+  position: absolute; top: 66.4px; left: 535.5px; width: 200px;
+  text-align: center; font-size: 10.9px; line-height: 24.9px; white-space: nowrap;
+}
+.pf-logo { position: absolute; top: 41.6px; left: 316px; width: 106px; height: auto; }
+.pf-title {
+  position: absolute; top: 160.4px; left: 0; right: 0;
+  text-align: center; font-size: 10.85px; line-height: 18px; white-space: nowrap;
+}
+
+.pf-top { position: relative; height: 171.5px; }
+.pf-qr {
+  position: absolute; top: 0; left: 2.5px; width: 171.5px; height: 171.5px;
+  image-rendering: pixelated;
+}
+.pf-birth { position: absolute; right: 0; bottom: -0.6px; width: 295px !important; }
+
+.pf-t {
+  width: 100%; border-collapse: collapse; table-layout: auto;
+  font-size: 9.7px; font-weight: 600; line-height: 14px;
+}
+.pf-t th, .pf-t td {
+  border: 1px solid #ddd; padding: 4px 5px 4px 3px; vertical-align: bottom;
+  text-align: right; font-weight: 600; background: #fff; color: #000;
+  -webkit-text-stroke: 0.4px #000; /* the official printout is set heavier than the font's own weight */
+}
+.pf-t th { width: 86px; }
+.pf-t td { overflow-wrap: anywhere; }
+
+.pf-names { margin-top: 5.1px; }
+.pf-sec { font-size: 13.6px; line-height: 20px; font-weight: 400; margin: 9.8px 0 8px; white-space: nowrap; }
+.pf-sec-tight { margin-top: 0; margin-bottom: 7px; }
+.pf-sec-par { margin-top: 11px; }
+.pf-address th { width: auto; }
+
+.pf-cols { display: flex; gap: 2.5px; padding: 0 1.3px; align-items: flex-start; }
+.pf-col { flex: 1 1 0; min-width: 0; }
+
+.pf-signs {
+  display: flex; margin-top: 58px; padding: 0 7.1px;
+  font-size: 9.9px; line-height: 16px; text-align: center;
+}
+.pf-signs > div { flex: 1 1 0; }
+
+@media print {
+  .no-print, .app-bar, .progress, .action-bar, .toast, #lang-dialog, .sheet-overlay { display: none !important; }
+  @page { size: A4 portrait; margin: 0; }
+  :root { padding: 0 !important; }
+  body, html { background: #fff; margin: 0 !important; padding: 0 !important; }
+  .review { padding: 0 !important; margin: 0 !important; max-width: none; }
+  .pf-stage { box-shadow: none !important; height: auto !important; overflow: visible !important; margin: 0; border-radius: 0; }
+  .pf-scaler { transform: none !important; width: auto !important; height: auto !important; }
+  .pf-page { width: 210mm; height: 296.5mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
