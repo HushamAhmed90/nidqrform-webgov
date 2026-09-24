@@ -1,81 +1,40 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>استمارة البطاقة الوطنية</title>
-  <meta name="description" content="تعبئة استمارة البطاقة الوطنية العراقية من الموبايل مع رمز QR، وحفظها كصورة أو PDF أو طباعتها. برنامج مجاني من إعداد هشام احمد.">
-  <meta name="theme-color" content="#0A4E3A">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="البطاقة الوطنية">
-  <link rel="stylesheet" href="css/style.css">
-
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  
+  <meta name="robots" content="noindex">
+  <title>تم إيقاف البرنامج</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #EDF1EF; color: #16211D;
+      font-family: Tahoma, 'Segoe UI', Arial, sans-serif; }
+    main { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; }
+    .box { max-width: 420px; background: #fff; border-radius: 16px; padding: 28px 22px; text-align: center; line-height: 1.9; }
+    h1 { font-size: 21px; margin: 0 0 10px; }
+    p { margin: 0 0 8px; font-size: 16px; color: #5B6B65; }
+  </style>
 </head>
 <body>
-
-  <div id="lang-dialog" class="dialog-overlay" style="display:none">
-    <div class="dialog-box">
-      <div id="owner-byline" class="owner-byline"></div>
-      <p class="dialog-msg" id="lang-dialog-msg">أختر لغــة عرض التطبيق / زمانی نمایشی ئەپەکە هەڵبژێرە</p>
-      <div class="dialog-actions">
-        <button id="lang-ara-btn" class="btn btn-primary">عــربــي</button>
-        <button id="lang-kur-btn" class="btn btn-primary">كـــوردي</button>
-      </div>
+  <main>
+    <div class="box">
+      <h1>تم إيقاف هذا البرنامج</h1>
+      <p>شكراً لكل من استخدمه.</p>
+      <p>إذا كان البرنامج مثبتاً على موبايلك، يمكنك حذف أيقونته.</p>
+      <hr style="border:0;border-top:1px solid #E1E7E4;margin:16px 0">
+      <p dir="rtl">ئەم بەرنامەیە ڕاگیراوە. سوپاس بۆ هەموو ئەوانەی بەکاریان هێنا.</p>
     </div>
-  </div>
-
-  
-  <div id="app-root"></div>
-
-  <!-- Content Section added for Google AdSense Approval (Hidden on print) -->
-  <div class="no-print" style="max-width: 950px; margin: 20px auto; padding: 20px; background: #fff; text-align: right; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-size: 14px; color: #333;">
-      <div style="background: #fff8e1; border: 1px solid #ffc107; border-radius: 8px; padding: 15px 18px; margin-bottom: 15px;">
-        <h3 style="color: #b45309; margin: 0 0 10px 0;">إخلاء مسؤولية</h3>
-        <p style="line-height: 1.8; margin: 0;">
-            هذا الموقع أداة مساعدة <strong>مستقلة وغير رسمية</strong>، تم برمجتها لتسهيل تعبئة وطباعة الاستمارة على المواطنين، وهي <strong>غير مرتبطة أو تابعة بأي شكل من الأشكال لوزارة الداخلية العراقية أو مديرية البطاقة الوطنية أو أي جهة حكومية رسمية</strong>. الشعارات والتصميم المستخدمان هنا لغرض محاكاة شكل الاستمارة الرسمية فقط تسهيلاً على المستخدم، ولا يمثلان أي اعتماد أو تعاون رسمي مع الجهات المذكورة.
-            يقع على عاتق المستخدم وحده التأكد من صحة ومطابقة البيانات المدخلة قبل التقديم، ولا تضمن هذه الأداة قبول الاستمارة من الجهات الرسمية. لا يتم إرسال أو مشاركة أي بيانات شخصية تُكتب هنا؛ تتم معالجة جميع البيانات محلياً على جهاز المستخدم فقط، وتُحفظ مسودة الاستمارة على الجهاز نفسه لتكملتها لاحقاً، ويمكن مسحها بزر "استمارة جديدة".
-        </p>
-      </div>
-
-      <h3 style="color: #1565c0; margin-bottom: 10px;">معلومات عن الاستمارة الإلكترونية</h3>
-      <p style="line-height: 1.8; margin-bottom: 10px;">
-          هذه الأداة المجانية تساعدك على تعبئة استمارة البطاقة الوطنية الموحدة بشكل إلكتروني سريع وسهل، وتجهيزها للطباعة مع رمز الاستجابة السريعة (QR Code) المطلوب من قبل مديرية الأحوال المدنية والجوازات والإقامة في جمهورية العراق.
-      </p>
-      <p style="line-height: 1.8;">
-          <strong>طريقة الاستخدام:</strong> قم بإدخال بياناتك الشخصية وبيانات الوالدين في الحقول المخصصة أعلاه. تأكد من أن جميع المعلومات صحيحة ومطابقة للمستندات الرسمية. بعد الانتهاء من ملء جميع الحقول المطلوبة، اضغط على زر "حفظ / طباعة" للحصول على النسخة الجاهزة للتقديم.
-      </p>
-
-      <h3 style="color: #1565c0; margin-top: 20px; margin-bottom: 10px;">التعليمات</h3>
-      <ul style="line-height: 1.8; margin-bottom: 10px; padding-right: 20px; list-style-type: disc;">
-          <li>ملء كافة الحقول المطلوبة في الواجهة .</li>
-          <li>التواريخ يتم اختيارها من التقويم وبالإمكان تحديد سنة الميلاد بالضغط عليها .</li>
-          <li>تثبيت ( 7/1 ) افتراضياً في حقل التولد لمن لا يوجد له يوم وشهر .</li>
-          <li>تثبيت ( 1 ) افتراضياً في حقل التولد لمن لا يوجد لديه يوم .</li>
-          <li>ضرورة تثبيت رقم جواز السفر ان وجد .</li>
-          <li>تثبيت رقم السجل والصحيفة للاطفال حديثي الولادة كما مثبت في هوية الأحوال المدنية الخاصة بالاب .</li>
-          <li>لمن لا يملك شهادة الجنسية العراقية تترك الحقول الخاصة بشهادة الجنسية فارغة ماعدا المادة القانونية تثبت استنادا لما مثبت في شهادة الجنسية الإسناد .</li>
-          <li>ضرورة تثبيت رقم الهاتف الصحيح ليكون مفتاح تواصل معك عند حدوث طارئ في قيدك الشخصي .</li>
-          <li>بعد المراجعة تحفظ الاستمارة كصورة أو ملف PDF على الموبايل، ويمكن إرسالها لأي مكتب طباعة.</li>
-          <li>تطبع الاستمارة مباشرة بالضغط على زر الطباعة.</li>
-          <li>يمكن تثبيت الموقع كتطبيق على الموبايل من زر "تثبيت التطبيق"، ويعمل بعدها بدون إنترنت.</li>
-      </ul>
-  </div>
-
-  <script src="js/qrcode.min.js"></script>
-  <script src="js/html2canvas.min.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/fields.js"></script>
-  <script src="js/mobile-strings.js"></script>
-  <script src="js/app.js"></script>
+  </main>
+  <script>
+    // Remove everything the app stored on this device: offline copy and saved form draft.
+    try { localStorage.clear(); sessionStorage.clear(); } catch (e) {}
+    if ('caches' in window) {
+      caches.keys().then(function (keys) { keys.forEach(function (k) { caches.delete(k); }); });
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        regs.forEach(function (r) { r.unregister(); });
+      });
+    }
+  </script>
 </body>
 </html>
