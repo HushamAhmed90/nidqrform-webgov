@@ -117,6 +117,16 @@
 
   // ---------- Owner / WhatsApp contact ----------
   function ownerLang() { return state.lang || 'Ara'; }
+  function waLinkTo(number, msg) {
+    return 'https://wa.me/' + number + '?text=' + encodeURIComponent(msg);
+  }
+  function partnerAvatar(size) {
+    var P = window.NID_PARTNER;
+    if (P.photo) return el('img', { class: 'owner-photo', src: P.photo, alt: '', width: String(size), height: String(size), style: 'width:' + size + 'px;height:' + size + 'px' });
+    var d = el('span', { class: 'partner-initials', text: P.initials, 'aria-hidden': 'true' });
+    d.style.width = size + 'px'; d.style.height = size + 'px'; d.style.fontSize = Math.round(size * 0.36) + 'px';
+    return d;
+  }
   function waLink(msg) {
     var o = window.NID_OWNER;
     return 'https://wa.me/' + o.whatsapp + '?text=' + encodeURIComponent(msg || o.text[ownerLang()].message);
@@ -125,19 +135,22 @@
   // opens WhatsApp with the matching message and is counted separately.
   var PROMO_ICONS = {
     calendar: '<path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>',
+    palette: '<path d="M12 21a9 9 0 1 1 0-18c5 0 9 3.6 9 8 0 2.5-2 4-4.5 4H15a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 21z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>',
     scale: '<path d="M7 20h10M6 6l6-1 6 1M12 3v17M9 12L6 6l-3 6a3 3 0 0 0 6 0zM21 12l-3-6-3 6a3 3 0 0 0 6 0z"/>'
   };
   function promoTicker() {
     var t = window.NID_OWNER.text[ownerLang()];
+    var pt = window.NID_PARTNER.text[ownerLang()];
     var promos = [
       { icon: 'calendar', title: t.promo, cta: t.promoCta, msg: t.promoMessage, ev: 'booking_click' },
-      { icon: 'scale', title: t.lawyerTitle, text: t.lawyerText, cta: t.lawyerCta, msg: t.lawyerMessage, ev: 'lawyer_click' }
+      { icon: 'scale', title: t.lawyerTitle, text: t.lawyerText, cta: t.lawyerCta, msg: t.lawyerMessage, ev: 'lawyer_click' },
+      { icon: 'palette', title: pt.designTitle, text: pt.designText, cta: pt.designCta, href: waLinkTo(window.NID_PARTNER.whatsapp, pt.message), ev: 'anmar_click' }
     ];
     var bar = el('div', { class: 'promo no-print' });
     var track = el('div', { class: 'promo-track' });
     for (var round = 0; round < 2; round++) {
       promos.forEach(function (p) {
-        var a = el('a', { class: 'promo-item promo-' + p.icon, dir: 'rtl', href: waLink(p.msg), target: '_blank', rel: 'noopener' });
+        var a = el('a', { class: 'promo-item promo-' + p.icon, dir: 'rtl', href: p.href || waLink(p.msg), target: '_blank', rel: 'noopener' });
         if (round > 0) { a.setAttribute('aria-hidden', 'true'); a.setAttribute('tabindex', '-1'); }
         a.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + PROMO_ICONS[p.icon] + '</g></svg>';
         a.appendChild(el('b', { text: p.title }));
@@ -672,6 +685,23 @@
     ]));
     main.appendChild(card);
 
+    var P = window.NID_PARTNER, pt = P.text[ownerLang()];
+    var pcard = el('div', { class: 'partner-card no-print' });
+    var phead = el('div', { class: 'owner-card-head' });
+    phead.appendChild(partnerAvatar(52));
+    phead.appendChild(el('div', {}, [
+      el('p', { class: 'owner-card-name', text: P.name[ownerLang()] }),
+      el('p', { class: 'partner-role', text: pt.cardRole }),
+    ]));
+    pcard.appendChild(phead);
+    pcard.appendChild(el('p', { class: 'partner-text', text: pt.cardText }));
+    var pbtn = el('a', { class: 'btn btn-partner btn-block', href: waLinkTo(P.whatsapp, pt.message), target: '_blank', rel: 'noopener' });
+    pbtn.innerHTML = waButton('x', null).innerHTML;
+    pbtn.appendChild(el('span', { text: pt.cardButton }));
+    pbtn.addEventListener('click', function () { trackEv('anmar_click', { place: 'review_card' }); });
+    pcard.appendChild(pbtn);
+    main.appendChild(pcard);
+
     var again = el('button', { class: 'btn btn-quiet btn-block no-print', type: 'button', text: u.newForm });
     again.onclick = function () {
       if (!confirm(u.confirmNew)) return;
@@ -877,6 +907,8 @@
       ob.appendChild(ownerPhoto(76));
       ob.appendChild(el('p', { class: 'owner-byline-sub', text: o.text.Ara.byline }));
       ob.appendChild(el('p', { class: 'owner-byline-name', text: o.name.Ara }));
+      var P = window.NID_PARTNER;
+      ob.appendChild(el('p', { class: 'owner-byline-credit', text: P.text.Ara.credit + ': ' + P.name.Ara }));
     }
     $('lang-ara-btn').onclick = function () { selectLang('Ara'); };
     $('lang-kur-btn').onclick = function () { selectLang('Kur'); };

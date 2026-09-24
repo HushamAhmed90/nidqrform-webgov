@@ -199,6 +199,22 @@ input[dir="ltr"].field-input { text-align: right; }
 .owner-social .btn { font-size: 14px; padding: 0 8px; min-height: 46px; white-space: nowrap; }
 .owner-strip-icon { width: 32px; }
 
+/* ---- Partner (idea & design credit) ---- */
+.partner-initials {
+  border-radius: 50%; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  background: #E4E9F4; color: #1F3A68; font-weight: 700;
+}
+.owner-byline-credit { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.partner-card {
+  background: var(--surface); border: 2px solid #1F3A68; border-radius: 16px;
+  padding: 14px; margin: 10px 0 6px;
+}
+.partner-role { margin: 2px 0 0; font-size: 14px; color: #1F3A68; font-weight: 700; line-height: 1.6; }
+.partner-text { margin: 8px 0 4px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.btn-partner { background: #1F3A68; border-color: #1F3A68; color: #fff; text-decoration: none; gap: 8px; }
+.btn-partner:active { background: #162B4E; }
+.promo-palette { color: #5B2A6E; }
+
 /* ---- Promo strip (booking + lawyer announcements) ---- */
 .promo {
   overflow: hidden; white-space: nowrap;

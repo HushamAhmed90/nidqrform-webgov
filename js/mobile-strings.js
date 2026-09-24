@@ -208,3 +208,34 @@ window.NID_OWNER = {
     }
   }
 };
+
+// Program idea & designer, credited and recommended inside the app.
+// photo: set to e.g. 'css/img/anmar.jpg' once a picture is added.
+window.NID_PARTNER = {
+  name: { Ara: 'أنمار مادو', Kur: 'ئەنمار مادۆ' },
+  initials: 'أم',
+  whatsapp: '491727748957',
+  photo: null,
+  text: {
+    Ara: {
+      credit: 'فكرة البرنامج',
+      designTitle: 'تحتاج تصميم؟',
+      designText: 'شعارات، إعلانات، بطاقات وتصاميم سوشيال ميديا',
+      designCta: 'أنصح بشدة بالمصمم أنمار مادو',
+      cardRole: 'صاحب فكرة البرنامج ومصمم محترف',
+      cardText: 'أنصح به وبشدة لكل من يبحث عن تصاميم',
+      cardButton: 'تواصل مع أنمار على واتساب',
+      message: 'مرحباً أنمار، وصلت لك من برنامج استمارة البطاقة الوطنية وأحتاج تصميم'
+    },
+    Kur: {
+      credit: 'بیرۆکەی بەرنامەکە',
+      designTitle: 'پێویستت بە دیزاینە؟',
+      designText: 'لۆگۆ، ڕیکلام، کارت و دیزاینی سۆشیاڵ میدیا',
+      designCta: 'بە توندی دیزاینەر ئەنمار مادۆ پێشنیار دەکەم',
+      cardRole: 'خاوەنی بیرۆکەی بەرنامەکە و دیزاینەرێکی پرۆفیشناڵ',
+      cardText: 'بە توندی پێشنیاری دەکەم بۆ هەر کەسێک بەدوای دیزایندا دەگەڕێت',
+      cardButton: 'لە واتسئاپ پەیوەندی بە ئەنمارەوە بکە',
+      message: 'سڵاو ئەنمار، لە بەرنامەی فۆرمی کارتی نیشتیمانییەوە هاتووم و پێویستم بە دیزاینە'
+    }
+  }
+};
